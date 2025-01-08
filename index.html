@@ -12,8 +12,10 @@
     <div id="plates"></div>
 
     <script>
-        const ws = new WebSocket('ws://127.0.0.1:9001'); // Replace with your server's IP and WebSocket port
-
+        const ws = new WebSocket('ws://0.0.0.0:9001');
+        ws.onopen = () => console.log('Connected to WebSocket server');
+        ws.onmessage = (message) => console.log(`Received: ${message.data}`);
+        ws.onerror = (error) => console.error(`WebSocket error: ${error}`);
         ws.onmessage = (event) => {
             const data = JSON.parse(event.data);
             const frameHex = data.frame;
