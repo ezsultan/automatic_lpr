@@ -25,16 +25,13 @@ WS_PORT = 9001
 ws_server = WebsocketServer(port=WS_PORT, host=WS_HOST)
 
 def send_data_to_ws(server, frame, plate_data):
-    print("here")
-    """
-    Send frame and detected plate data to WebSocket clients.
-    """
     _, buffer = cv2.imencode('.jpg', frame)  # Encode frame as JPEG
     frame_bytes = buffer.tobytes()
     plate_json = {
         "plates": plate_data,
         "frame": frame_bytes.hex()  # Convert to hex for transmission
     }
+    print(json.dumps(plate_json), "anjay")
     server.send_message_to_all(json.dumps(plate_json))
 
 @smart_inference_mode()
@@ -164,16 +161,6 @@ def run(
             # Stream results
             im0 = annotator.result()
             send_data_to_ws(ws_server, im0, "test")
-            
-            # if view_img:
-            #     if platform.system() == 'Linux' and p not in windows:
-            #         windows.append(p)
-            #         cv2.namedWindow(str(p), cv2.WINDOW_NORMAL | cv2.WINDOW_KEEPRATIO)  # allow window resize (Linux)
-            #         cv2.resizeWindow(str(p), im0.shape[1], im0.shape[0])
-            #     cv2.imshow(str(p), im0)
-            #     cv2.waitKey(1)  # 1 millisecond
-
-            # Save results (image with detections)
             if save_img:
                 if dataset.mode == 'image':
                     cv2.imwrite(save_path, im0)
