@@ -1,9 +1,10 @@
 import argparse
 import os
-import platform
 import sys
 from pathlib import Path
-
+import json
+from websocket_server import WebsocketServer
+import threading
 import torch
 
 FILE = Path(__file__).resolve()
@@ -19,6 +20,22 @@ from utils.general import (LOGGER, Profile, check_file, check_img_size, check_im
 from utils.plots import Annotator, colors, save_one_box
 from utils.torch_utils import select_device, smart_inference_mode
 
+WS_HOST = "0.0.0.0" 
+WS_PORT = 9001
+ws_server = WebsocketServer(port=WS_PORT, host=WS_HOST)
+
+def send_data_to_ws(server, frame, plate_data):
+    print("here")
+    """
+    Send frame and detected plate data to WebSocket clients.
+    """
+    _, buffer = cv2.imencode('.jpg', frame)  # Encode frame as JPEG
+    frame_bytes = buffer.tobytes()
+    plate_json = {
+        "plates": plate_data,
+        "frame": frame_bytes.hex()  # Convert to hex for transmission
+    }
+    server.send_message_to_all(json.dumps(plate_json))
 
 @smart_inference_mode()
 def run(
@@ -146,6 +163,8 @@ def run(
 
             # Stream results
             im0 = annotator.result()
+            send_data_to_ws(ws_server, im0, "bb")
+            
             # if view_img:
             #     if platform.system() == 'Linux' and p not in windows:
             #         windows.append(p)
@@ -220,12 +239,19 @@ def parse_opt():
     print_args(vars(opt))
     return opt
 
-
+def start_ws_server():
+    print(f"WebSocket server started on ws://localhost:{WS_PORT}")
+    ws_server.run_forever()
+    
 def main(opt):
     check_requirements(exclude=('tensorboard', 'thop'))
     run(**vars(opt))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
+    ws_thread = threading.Thread(target=start_ws_server)
+    ws_thread.daemon = True
+    ws_thread.start()
     opt = parse_opt()
     main(opt)
+
