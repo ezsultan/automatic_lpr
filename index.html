@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>License Plate Detection</title>
+</head>
+<body>
+    <h1>License Plate Detection</h1>
+    <img id="frame" alt="Video Frame" style="max-width: 100%; border: 1px solid #ccc;">
+    <h3>Detected Plates:</h3>
+    <div id="plates"></div>
+
+    <script>
+        const ws = new WebSocket('ws://127.0.0.1:9001'); // Replace with your server's IP and WebSocket port
+
+        ws.onmessage = (event) => {
+            const data = JSON.parse(event.data);
+            const frameHex = data.frame;
+            const plates = data.plates;
+
+            // Convert hex to image
+            const frameBuffer = new Uint8Array(frameHex.match(/.{1,2}/g).map(byte => parseInt(byte, 16)));
+            const blob = new Blob([frameBuffer], { type: 'image/jpeg' });
+            const frameUrl = URL.createObjectURL(blob);
+
+            // Display image
+            document.getElementById('frame').src = frameUrl;
+
+            // Display detected plates as a list
+            document.getElementById('plates').innerHTML = plates.join('<br>');
+        };
+    </script>
+</body>
+</html>
