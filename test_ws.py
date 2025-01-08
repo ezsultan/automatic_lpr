@@ -1,7 +1,7 @@
 import websocket
 
 def on_message(ws, message):
-    print(f"Received: {message}")
+    print(f"Received")
 
 def on_error(ws, error):
     print(f"Error: {error}")
