@@ -1,0 +1,13 @@
+train: dataset/train/images
+val: dataset/valid/images
+test: dataset/test/images
+
+nc: 1
+names: ['Plat-Nomor']
+
+roboflow:
+  workspace: speed-estimation-zubit
+  project: deteksi-plat-nomor-d5qcc-vzgvf-z1xzs
+  version: 1
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/speed-estimation-zubit/deteksi-plat-nomor-d5qcc-vzgvf-z1xzs/dataset/1
