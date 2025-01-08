@@ -163,7 +163,7 @@ def run(
 
             # Stream results
             im0 = annotator.result()
-            send_data_to_ws(ws_server, im0, "bb")
+            send_data_to_ws(ws_server, im0, "test")
             
             # if view_img:
             #     if platform.system() == 'Linux' and p not in windows:
