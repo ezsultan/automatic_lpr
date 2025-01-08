@@ -23,6 +23,7 @@ from utils.torch_utils import select_device, smart_inference_mode
 WS_HOST = "0.0.0.0" 
 WS_PORT = 9001
 ws_server = WebsocketServer(port=WS_PORT, host=WS_HOST)
+print(ws_server, "WS SERVER HERE")
 
 def send_data_to_ws(server, frame, plate_data):
     _, buffer = cv2.imencode('.jpg', frame)  # Encode frame as JPEG
