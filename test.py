@@ -31,7 +31,6 @@ def send_data_to_ws(server, frame, plate_data):
         "plates": plate_data,
         "frame": frame_bytes.hex()  # Convert to hex for transmission
     }
-    print(json.dumps(plate_json), "anjay")
     server.send_message_to_all(json.dumps(plate_json))
 
 @smart_inference_mode()
