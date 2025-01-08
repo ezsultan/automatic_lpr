@@ -12,7 +12,7 @@
     <div id="plates"></div>
 
     <script>
-        const ws = new WebSocket('ws://0.0.0.0:9001');
+        const ws = new WebSocket('ws://http://192.168.1.38:9001');
         ws.onopen = () => console.log('Connected to WebSocket server');
         // ws.onmessage = (message) => console.log(`Received: ${message.data}`);
         // ws.onerror = (error) => console.error(`WebSocket error: ${error}`);
