@@ -13,6 +13,7 @@
 
     <script>
         const ws = new WebSocket('ws://192.168.1.38:9001');
+        // const ws = new WebSocket('ws://127.0.0.1:9001');
         ws.onopen = () => console.log('Connected to WebSocket server');
         // ws.onmessage = (message) => console.log(`Received: ${message.data}`);
         // ws.onerror = (error) => console.error(`WebSocket error: ${error}`);
