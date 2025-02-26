@@ -10,8 +10,8 @@
     <img id="frame" alt="Video Frame" style="max-width: 100%; border: 1px solid #ccc;">
 
     <script>
-        const ws = new WebSocket('ws://192.168.1.38:9001');
-        // const ws = new WebSocket('ws://127.0.0.1:9001');
+        // const ws = new WebSocket('ws://192.168.1.38:9001');
+        const ws = new WebSocket('ws://127.0.0.1:9001');
         ws.onmessage = (event) => {
             const data = JSON.parse(event.data);
             const frameHex = data.frame;
