@@ -9,7 +9,7 @@ import torch
 import cv2
 import easyocr
 import numpy as np
-from websocket_server import WebsocketServer
+# from websocket_server import WebsocketServer
 import re
 
 # Menentukan direktori root (folder utama) dari proyek
@@ -27,9 +27,9 @@ from utils.plots import Annotator, colors
 from utils.torch_utils import select_device
 
 # Konfigurasi WebSocket
-WS_HOST = "0.0.0.0"  # Host WebSocket (bisa diakses dari mana saja)
-WS_PORT = 9001  # Port WebSocket
-ws_server = WebsocketServer(port=WS_PORT, host=WS_HOST)  # Buat server WebSocket
+# WS_HOST = "0.0.0.0"  # Host WebSocket (bisa diakses dari mana saja)
+# WS_PORT = 9001  # Port WebSocket
+# ws_server = WebsocketServer(port=WS_PORT, host=WS_HOST)  # Buat server WebSocket
 
 # Inisialisasi EasyOCR untuk membaca teks dari gambar (gunakan bahasa Inggris)
 reader = easyocr.Reader(['en'], gpu=False)  # Gunakan CPU jika tidak ada GPU
@@ -148,7 +148,7 @@ def run(weights=ROOT / 'best.onnx', source='rtsp://admin:S3mangat45**@192.168.1.
                     "confidence": 0.0,
                     "bbox": [0, 0, 0, 0]
                 }]
-            send_data_to_ws(ws_server, im0, plates)  # Kirim data ke WebSocket
+            # send_data_to_ws(ws_server, im0, plates)  # Kirim data ke WebSocket
 
 def parse_opt():
     """Parse argumen dari command line"""
@@ -163,13 +163,13 @@ def parse_opt():
     opt.imgsz *= 2 if len(opt.imgsz) == 1 else 1  # Sesuaikan ukuran gambar
     return opt
 
-def start_ws_server():
-    """Jalankan server WebSocket"""
-    print(f"WebSocket server started on ws://localhost:{WS_PORT}")
-    try:
-        ws_server.run_forever()  # Jalankan server WebSocket selamanya
-    except Exception as e:
-        print(f"WebSocket server error: {e}")
+# def start_ws_server():
+#     """Jalankan server WebSocket"""
+#     print(f"WebSocket server started on ws://localhost:{WS_PORT}")
+#     try:
+#         ws_server.run_forever()  # Jalankan server WebSocket selamanya
+#     except Exception as e:
+#         print(f"WebSocket server error: {e}")
 
 def main(opt):
     """Fungsi utama untuk menjalankan program"""
@@ -177,8 +177,8 @@ def main(opt):
 
 if __name__ == "__main__":
     # Jalankan server WebSocket di thread terpisah
-    ws_thread = threading.Thread(target=start_ws_server, daemon=True)
-    ws_thread.start()
+    # ws_thread = threading.Thread(target=start_ws_server, daemon=True)
+    # ws_thread.start()
 
     # Parse argumen dan jalankan program utama
     opt = parse_opt()
