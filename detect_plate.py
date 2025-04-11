@@ -5,8 +5,8 @@ import sys
 from pathlib import Path
 import json
 import threading
-import backports.lzma as lzma
-sys.modules['lzma'] = lzma
+# import backports.lzma as lzma
+# sys.modules['lzma'] = lzma
 import torch
 import cv2
 import easyocr
@@ -80,7 +80,7 @@ def send_data_to_ws(server, frame, plate_data):
     server.send_message_to_all(json.dumps(plate_json))  # Kirim data ke semua klien WebSocket
 
 def run(weights=ROOT / 'best.onnx', source='rtsp://admin:S3mangat45**@192.168.1.64',
-        imgsz=(640, 640), conf_thres=0.5, iou_thres=0.45, device=''):
+        imgsz=(640, 640), conf_thres=0.5, iou_thres=0.45, device='', show=False):
     """Fungsi utama untuk menjalankan deteksi plat nomor"""
     # Pilih perangkat (CPU atau GPU)
     device = select_device(device)
@@ -146,6 +146,9 @@ def run(weights=ROOT / 'best.onnx', source='rtsp://admin:S3mangat45**@192.168.1.
                             annotator.box_label(xyxy, plate_text, color=colors(c, True))  # Gambar kotak dan teks di frame
             
             im0 = annotator.result()  # Hasil frame yang sudah di-annotate
+            if show:
+                cv2.imshow("INDONESIA ALPR", im0)
+                cv2.waitKey(1)
             # Kirim frame ke WebSocket meskipun tidak ada plat nomor yang terdeteksi
             if not plates:
                 plates = [{
@@ -164,6 +167,7 @@ def parse_opt():
     parser.add_argument('--conf-thres', type=float, default=0.5, help='Threshold confidence untuk deteksi')
     parser.add_argument('--iou-thres', type=float, default=0.45, help='Threshold IoU untuk NMS')
     parser.add_argument('--device', default='', help='Perangkat yang digunakan (CPU atau GPU)')
+    parser.add_argument('--show', default=False, help='Tampilkan frame atau tidak')
     opt = parser.parse_args()
     opt.imgsz *= 2 if len(opt.imgsz) == 1 else 1  # Sesuaikan ukuran gambar
     return opt
