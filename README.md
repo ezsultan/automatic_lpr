@@ -244,6 +244,16 @@ You can test the live camera feed using rtsp with command:
 ```bash
 python detect_plate.py --source "your-rtsp-url" --weights best.pt
 ```
+### 9. If got lzma error add this
+```bash
+pip install backports.lzma
+```
+add code below before import torch
+```bash
+import sys
+import backports.lzma as lzma
+sys.modules['lzma'] = lzma
+```
 ### 9. **Deactivate the Virtual Environment**
 When you're done, you can deactivate the virtual environment:
 ```bash
