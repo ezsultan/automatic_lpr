@@ -33,8 +33,11 @@ from utils.torch_utils import select_device
 # WS_PORT = 9001  # Port WebSocket
 # ws_server = WebsocketServer(port=WS_PORT, host=WS_HOST)  # Buat server WebSocket
 
+device = 'cuda' if torch.cuda.is_available() else 'cpu'
+print(f"Using device: {device}")
+
 # Inisialisasi EasyOCR untuk membaca teks dari gambar (gunakan bahasa Inggris)
-reader = easyocr.Reader(['en'], gpu=False)  # Gunakan CPU jika tidak ada GPU
+reader = easyocr.Reader(['en'], gpu=torch.cuda.is_available())  # Gunakan CPU jika tidak ada GPU
 
 def preprocess_plate(plate_img):
     """Preprocessing gambar plat nomor (ubah ke format RGB)"""
