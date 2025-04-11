@@ -1,5 +1,4 @@
-# Jetson-Nano-Yolo-v5-SETUP
-> **Stuck? Here’s the Ultimate Guide to Setting Up YOLOv5 on Jetson Nano with GPU Acceleration!**
+# ALPR with yoloV5 on Jetson Nano
 
 Installing YOLOv5 on Jetson Nano involves several steps including setting up a Python environment and installing necessary dependencies. I'll guide you through everything from the beginning.
 
@@ -230,10 +229,10 @@ sudo swapon --show
 ```
 
 ### 7. Install Required Packages
-**Clone the YOLOv5 Repository**
+**Clone the Repository**
 ```bash
-git clone https://github.com/ultralytics/yolov5.git
-cd yolov5
+git clone https://github.com/ezsultan/automatic_lpr.git
+cd automatic_lpr
 ```
 **Install Dependencies**:
 ```bash
@@ -244,12 +243,9 @@ pip install -r requirements.txt
 You can test the live camera feed using rtsp with command:
 ```bash
 python detect_plate.py --source "your-rtsp-url" --weights best.pt
-
-### 11. **Deactivate the Virtual Environment**
+```
+### 9. **Deactivate the Virtual Environment**
 When you're done, you can deactivate the virtual environment:
 ```bash
 deactivate
 ```
-<h1 align="center">
-    <img src="https://readme-typing-svg.herokuapp.com/?font=Righteous&size=35&center=true&vCenter=true&width=500&height=70&duration=4000&lines=Thanks+for+Visiting!+👋;" />
-</h1>
