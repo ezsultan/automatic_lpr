@@ -254,7 +254,7 @@ import sys
 import backports.lzma as lzma
 sys.modules['lzma'] = lzma
 ```
-### 9. **Deactivate the Virtual Environment**
+### 10. **Deactivate the Virtual Environment**
 When you're done, you can deactivate the virtual environment:
 ```bash
 deactivate
