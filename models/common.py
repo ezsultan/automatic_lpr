@@ -459,7 +459,7 @@ class Concat(nn.Module):
 class DetectMultiBackend(nn.Module):
     """YOLOv5 MultiBackend class for inference on various backends including PyTorch, ONNX, TensorRT, and more."""
 
-    def __init__(self, weights="yolov5s.pt", device=torch.device("cpu"), dnn=False, data=None, fp16=False, fuse=True):
+    def __init__(self, weights="yolov5s.pt", device=torch.device("cuda" if torch.cuda.is_available() else "cpu"), dnn=False, data=None, fp16=False, fuse=True):
         """Initializes DetectMultiBackend with support for various inference backends, including PyTorch and ONNX."""
         #   PyTorch:              weights = *.pt
         #   TorchScript:                    *.torchscript
