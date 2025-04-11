@@ -5,6 +5,8 @@ import sys
 from pathlib import Path
 import json
 import threading
+import backports.lzma as lzma
+sys.modules['lzma'] = lzma
 import torch
 import cv2
 import easyocr
