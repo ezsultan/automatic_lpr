@@ -7,8 +7,8 @@ import re
 from pathlib import Path
 
 import cv2
-# import backports.lzma as lzma
-# sys.modules['lzma'] = lzma
+import backports.lzma as lzma
+sys.modules['lzma'] = lzma
 import torch
 import easyocr
 import numpy as np
