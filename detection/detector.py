@@ -6,6 +6,8 @@ import re
 from pathlib import Path
 
 import cv2
+import backports.lzma as lzma
+sys.modules['lzma'] = lzma
 import torch
 import easyocr
 import numpy as np
@@ -19,6 +21,8 @@ from utils.torch_utils import select_device
 
 class ALPRSystem:
     def __init__(self):
+        print(f"CUDA Available: {torch.cuda.is_available()}")
+        print(f"CUDA Device Count: {torch.cuda.device_count()}")
         self.cfg = Config()
         self.device = select_device(self.cfg.DEVICE)
         self.reader = easyocr.Reader(['en'], gpu=torch.cuda.is_available())

@@ -19,7 +19,7 @@ class Config:
     IMG_SIZE = tuple(map(int, os.getenv('IMG_SIZE', '640,640').split(',')))
     CONF_THRESHOLD = float(os.getenv('CONF_THRESHOLD', 0.5))
     IOU_THRESHOLD = float(os.getenv('IOU_THRESHOLD', 0.45))
-    DEVICE = os.getenv('DEVICE', 'cuda' if torch.cuda.is_available() else 'cpu')
+    DEVICE = 'cuda' if torch.cuda.is_available() and torch.cuda.device_count() > 0 else 'cpu'
 
     # Display Settings
     SHOW_WINDOW = bool(int(os.getenv('SHOW_WINDOW', 0)))  # 1 to show, 0 to hide
