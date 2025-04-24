@@ -24,7 +24,7 @@ class ALPRSystem:
         print(f"CUDA Available: {torch.cuda.is_available()}")
         print(f"CUDA Device Count: {torch.cuda.device_count()}")
         self.cfg = Config()
-        self.device = select_device(self.cfg.DEVICE)
+        self.device = select_device('cuda:0' if torch.cuda.is_available() else 'cpu')
         self.reader = easyocr.Reader(['en'], gpu=torch.cuda.is_available())
         self.model = DetectMultiBackend(self.cfg.WEIGHTS_PATH, device=self.device)
         self.model.warmup(imgsz=(1, 3, *self.cfg.IMG_SIZE))
