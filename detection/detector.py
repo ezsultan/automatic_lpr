@@ -2,12 +2,13 @@ import os
 import sys
 import time
 import logging
+import requests
 import re
 from pathlib import Path
 
 import cv2
-import backports.lzma as lzma
-sys.modules['lzma'] = lzma
+# import backports.lzma as lzma
+# sys.modules['lzma'] = lzma
 import torch
 import easyocr
 import numpy as np
@@ -117,6 +118,15 @@ class ALPRSystem:
                                 plate_filename = self.save_dir / f'plate_{timestamp}.jpg'
                                 cv2.imwrite(str(plate_filename), plate_crop)
                                 annotator.box_label(xyxy, plate_text, color=colors(c, True))
+                                
+                                try:
+                                    requests.post(
+                                        Config.CONTROLLER_URL,
+                                        json={"plate": plate_text},
+                                        timeout=2
+                                    )
+                                except requests.exceptions.RequestException as e:
+                                    logging.error(f"Failed to notify controller: {str(e)}")
 
                 im0 = annotator.result()
                 if show:

@@ -30,6 +30,9 @@ class Config:
     # Logging
     LOG_DIR = BASE_DIR / 'logs'
     LOG_FILE = LOG_DIR / 'alpr.log'
+    
+    CONTROLLER_URL = os.getenv('CONTROLLER_URL', 'https://2f18zp3m-3000.asse.devtunnels.ms/gates/detect/plate')
+
 
     @classmethod
     def init(cls):
